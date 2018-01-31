@@ -55,6 +55,7 @@ void QuranInfo::loadAyas(QuranTextInfo *textInfo)
     QFile textFile(QString(":/quran/%1").arg(textInfo->filename));
     textFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream stream(&textFile);
+    stream.setCodec("UTF-8");
 
     foreach (SuraInfo *suraInfo, suras()) {
         suraInfo->clearAyas();
@@ -87,6 +88,7 @@ void QuranInfo::loadTranslations(QuranTextInfo *textInfo)
     QFile textFile(QString(":/quran/%1").arg(textInfo->filename));
     textFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream stream(&textFile);
+    stream.setCodec("UTF-8");
 
     while (!stream.atEnd()) {
         QStringList parts = stream.readLine().split('|');

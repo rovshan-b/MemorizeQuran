@@ -30,3 +30,5 @@ FORMS    +=
 RESOURCES += \
     fonts.qrc \
     quran.qrc
+
+RC_FILE = app.rc
