@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/me_quran.ttf</file>
+    </qresource>
+</RCC>

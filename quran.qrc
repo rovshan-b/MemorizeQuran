@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>quran/quran-simple-enhanced.txt</file>
+        <file>quran/quran-uthmani.txt</file>
+        <file>quran/suras.txt</file>
+        <file>quran/az.mammadaliyev.txt</file>
+        <file>quran/az.musayev.txt</file>
+        <file>quran/en.sahih.txt</file>
+        <file>quran/ru.kuliev.txt</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,115 @@
+index|ayas|start|name|tname|ename|type
+1|7|0|الفاتحة|Al-Faatiha|The Opening|Meccan
+2|286|7|البقرة|Al-Baqara|The Cow|Medinan
+3|200|293|آل عمران|Aal-i-Imraan|The Family of Imraan|Medinan
+4|176|493|النساء|An-Nisaa|The Women|Medinan
+5|120|669|المائدة|Al-Maaida|The Table|Medinan
+6|165|789|الأنعام|Al-An'aam|The Cattle|Meccan
+7|206|954|الأعراف|Al-A'raaf|The Heights|Meccan
+8|75|1160|الأنفال|Al-Anfaal|The Spoils of War|Medinan
+9|129|1235|التوبة|At-Tawba|The Repentance|Medinan
+10|109|1364|يونس|Yunus|Jonas|Meccan
+11|123|1473|هود|Hud|Hud|Meccan
+12|111|1596|يوسف|Yusuf|Joseph|Meccan
+13|43|1707|الرعد|Ar-Ra'd|The Thunder|Medinan
+14|52|1750|ابراهيم|Ibrahim|Abraham|Meccan
+15|99|1802|الحجر|Al-Hijr|The Rock|Meccan
+16|128|1901|النحل|An-Nahl|The Bee|Meccan
+17|111|2029|الإسراء|Al-Israa|The Night Journey|Meccan
+18|110|2140|الكهف|Al-Kahf|The Cave|Meccan
+19|98|2250|مريم|Maryam|Mary|Meccan
+20|135|2348|طه|Taa-Haa|Taa-Haa|Meccan
+21|112|2483|الأنبياء|Al-Anbiyaa|The Prophets|Meccan
+22|78|2595|الحج|Al-Hajj|The Pilgrimage|Medinan
+23|118|2673|المؤمنون|Al-Muminoon|The Believers|Meccan
+24|64|2791|النور|An-Noor|The Light|Medinan
+25|77|2855|الفرقان|Al-Furqaan|The Criterion|Meccan
+26|227|2932|الشعراء|Ash-Shu'araa|The Poets|Meccan
+27|93|3159|النمل|An-Naml|The Ant|Meccan
+28|88|3252|القصص|Al-Qasas|The Stories|Meccan
+29|69|3340|العنكبوت|Al-Ankaboot|The Spider|Meccan
+30|60|3409|الروم|Ar-Room|The Romans|Meccan
+31|34|3469|لقمان|Luqman|Luqman|Meccan
+32|30|3503|السجدة|As-Sajda|The Prostration|Meccan
+33|73|3533|الأحزاب|Al-Ahzaab|The Clans|Medinan
+34|54|3606|سبإ|Saba|Sheba|Meccan
+35|45|3660|فاطر|Faatir|The Originator|Meccan
+36|83|3705|يس|Yaseen|Yaseen|Meccan
+37|182|3788|الصافات|As-Saaffaat|Those drawn up in Ranks|Meccan
+38|88|3970|ص|Saad|The letter Saad|Meccan
+39|75|4058|الزمر|Az-Zumar|The Groups|Meccan
+40|85|4133|غافر|Al-Ghaafir|The Forgiver|Meccan
+41|54|4218|فصلت|Fussilat|Explained in detail|Meccan
+42|53|4272|الشورى|Ash-Shura|Consultation|Meccan
+43|89|4325|الزخرف|Az-Zukhruf|Ornaments of gold|Meccan
+44|59|4414|الدخان|Ad-Dukhaan|The Smoke|Meccan
+45|37|4473|الجاثية|Al-Jaathiya|Crouching|Meccan
+46|35|4510|الأحقاف|Al-Ahqaf|The Dunes|Meccan
+47|38|4545|محمد|Muhammad|Muhammad|Medinan
+48|29|4583|الفتح|Al-Fath|The Victory|Medinan
+49|18|4612|الحجرات|Al-Hujuraat|The Inner Apartments|Medinan
+50|45|4630|ق|Qaaf|The letter Qaaf|Meccan
+51|60|4675|الذاريات|Adh-Dhaariyat|The Winnowing Winds|Meccan
+52|49|4735|الطور|At-Tur|The Mount|Meccan
+53|62|4784|النجم|An-Najm|The Star|Meccan
+54|55|4846|القمر|Al-Qamar|The Moon|Meccan
+55|78|4901|الرحمن|Ar-Rahmaan|The Beneficent|Medinan
+56|96|4979|الواقعة|Al-Waaqia|The Inevitable|Meccan
+57|29|5075|الحديد|Al-Hadid|The Iron|Medinan
+58|22|5104|المجادلة|Al-Mujaadila|The Pleading Woman|Medinan
+59|24|5126|الحشر|Al-Hashr|The Exile|Medinan
+60|13|5150|الممتحنة|Al-Mumtahana|She that is to be examined|Medinan
+61|14|5163|الصف|As-Saff|The Ranks|Medinan
+62|11|5177|الجمعة|Al-Jumu'a|Friday|Medinan
+63|11|5188|المنافقون|Al-Munaafiqoon|The Hypocrites|Medinan
+64|18|5199|التغابن|At-Taghaabun|Mutual Disillusion|Medinan
+65|12|5217|الطلاق|At-Talaaq|Divorce|Medinan
+66|12|5229|التحريم|At-Tahrim|The Prohibition|Medinan
+67|30|5241|الملك|Al-Mulk|The Sovereignty|Meccan
+68|52|5271|القلم|Al-Qalam|The Pen|Meccan
+69|52|5323|الحاقة|Al-Haaqqa|The Reality|Meccan
+70|44|5375|المعارج|Al-Ma'aarij|The Ascending Stairways|Meccan
+71|28|5419|نوح|Nooh|Noah|Meccan
+72|28|5447|الجن|Al-Jinn|The Jinn|Meccan
+73|20|5475|المزمل|Al-Muzzammil|The Enshrouded One|Meccan
+74|56|5495|المدثر|Al-Muddaththir|The Cloaked One|Meccan
+75|40|5551|القيامة|Al-Qiyaama|The Resurrection|Meccan
+76|31|5591|الانسان|Al-Insaan|Man|Medinan
+77|50|5622|المرسلات|Al-Mursalaat|The Emissaries|Meccan
+78|40|5672|النبإ|An-Naba|The Announcement|Meccan
+79|46|5712|النازعات|An-Naazi'aat|Those who drag forth|Meccan
+80|42|5758|عبس|Abasa|He frowned|Meccan
+81|29|5800|التكوير|At-Takwir|The Overthrowing|Meccan
+82|19|5829|الإنفطار|Al-Infitaar|The Cleaving|Meccan
+83|36|5848|المطففين|Al-Mutaffifin|Defrauding|Meccan
+84|25|5884|الإنشقاق|Al-Inshiqaaq|The Splitting Open|Meccan
+85|22|5909|البروج|Al-Burooj|The Constellations|Meccan
+86|17|5931|الطارق|At-Taariq|The Morning Star|Meccan
+87|19|5948|الأعلى|Al-A'laa|The Most High|Meccan
+88|26|5967|الغاشية|Al-Ghaashiya|The Overwhelming|Meccan
+89|30|5993|الفجر|Al-Fajr|The Dawn|Meccan
+90|20|6023|البلد|Al-Balad|The City|Meccan
+91|15|6043|الشمس|Ash-Shams|The Sun|Meccan
+92|21|6058|الليل|Al-Lail|The Night|Meccan
+93|11|6079|الضحى|Ad-Dhuhaa|The Morning Hours|Meccan
+94|8|6090|الشرح|Ash-Sharh|The Consolation|Meccan
+95|8|6098|التين|At-Tin|The Fig|Meccan
+96|19|6106|العلق|Al-Alaq|The Clot|Meccan
+97|5|6125|القدر|Al-Qadr|The Power, Fate|Meccan
+98|8|6130|البينة|Al-Bayyina|The Evidence|Medinan
+99|8|6138|الزلزلة|Az-Zalzala|The Earthquake|Medinan
+100|11|6146|العاديات|Al-Aadiyaat|The Chargers|Meccan
+101|11|6157|القارعة|Al-Qaari'a|The Calamity|Meccan
+102|8|6168|التكاثر|At-Takaathur|Competition|Meccan
+103|3|6176|العصر|Al-Asr|The Declining Day, Epoch|Meccan
+104|9|6179|الهمزة|Al-Humaza|The Traducer|Meccan
+105|5|6188|الفيل|Al-Fil|The Elephant|Meccan
+106|4|6193|قريش|Quraish|Quraysh|Meccan
+107|7|6197|الماعون|Al-Maa'un|Almsgiving|Meccan
+108|3|6204|الكوثر|Al-Kawthar|Abundance|Meccan
+109|6|6207|الكافرون|Al-Kaafiroon|The Disbelievers|Meccan
+110|3|6213|النصر|An-Nasr|Divine Support|Medinan
+111|5|6216|المسد|Al-Masad|The Palm Fibre|Meccan
+112|4|6221|الإخلاص|Al-Ikhlaas|Sincerity|Meccan
+113|5|6225|الفلق|Al-Falaq|The Dawn|Meccan
+114|6|6230|الناس|An-Naas|Mankind|Meccan
