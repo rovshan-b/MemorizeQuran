@@ -1,7 +1,7 @@
 #include "mylabel.h"
 #include <QtGui>
 
-MyLabel::MyLabel(QWidget *parent) : QLabel(parent), m_minFontSize(12)
+MyLabel::MyLabel(QWidget *parent) : QLabel(parent), m_minFontSize(10)
 {
     //QFont f = font();
     //f.setFamily("Arial");

@@ -37,6 +37,11 @@ QString SuraInfo::ayaText(int index) const
     return m_ayaTexts.at(indexToGet - 1);
 }
 
+int SuraInfo::ayaTextCount() const
+{
+    return m_ayaTexts.count();
+}
+
 void SuraInfo::addTranslation(const QString &translation)
 {
     if (m_translationTexts.empty()) {

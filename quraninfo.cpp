@@ -71,7 +71,17 @@ void QuranInfo::loadAyas(QuranTextInfo *textInfo)
         int suraIx = parts.at(0).toInt();
         QString text = parts.at(2);
 
-        sura(suraIx)->addAya(text);
+        SuraInfo *suraInfo = sura(suraIx);
+
+        if (suraIx != 1 && suraIx != 9 && suraInfo->ayaTextCount() == 0) {
+            QStringList words = text.split(' ');
+            if (words.count() > 4) {
+                words.insert(4, "\n");
+            }
+            text = words.join(" ");
+        }
+
+        suraInfo->addAya(text);
     }
 }
 

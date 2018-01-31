@@ -22,6 +22,7 @@ public:
     void addAya(const QString &aya);
     void clearAyas();
     QString ayaText(int index) const;
+    int ayaTextCount() const;
 
     void addTranslation(const QString &translationText);
     void clearTranslations();
