@@ -65,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent) :
     int sura = qMin(qMax(settings.value("sura", "1").toInt(), 1), 114);
     setCurrentSura(sura);
 
+    int aya = settings.value("aya", "1").toInt();
+    setCurrentAya(aya);
 
     connect(&m_rotateTimer, SIGNAL(timeout()), this, SLOT(showNextAya()));
 
@@ -434,6 +436,7 @@ void MainWindow::exit()
     settings.setValue("opacity", windowOpacity());
     settings.setValue("text", m_currentText->index);
     settings.setValue("sura", m_currentSura->index);
+    settings.setValue("aya", m_currentAya);
     settings.setValue("trans", m_currentTrans->index);
     settings.setValue("rotateInterval", m_rotateInterval);
 
