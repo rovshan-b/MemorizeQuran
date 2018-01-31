@@ -4,6 +4,8 @@ Memorize Quran is a very simple application that stays on your desktop and rotat
 It also displays translation for current aya. You can change window opacity by using mouse wheel button.
 It does not require internet connection. All the files are built in as resource files.
 
+All data is from [Tanzil.net](http://tanzil.net)
+
 <p align="center">
   <img src="./screenshots/screenshot1.png" alt="Size Limit example"
        width="878" height="680">
