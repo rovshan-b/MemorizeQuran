@@ -7,7 +7,7 @@ It does not require internet connection. All the files are built in as resource 
 All data is from [Tanzil.net](http://tanzil.net)
 
 <p align="center">
-  <img src="./screenshots/screenshot1.png" alt="Size Limit example"
+  <img src="./screenshots/screenshot1.png" 
        width="878" height="680">
 </p>
 
