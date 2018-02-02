@@ -51,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QFontDatabase::addApplicationFont(":/fonts/me_quran.ttf");
     QFont font = QFont("me_quran", 18, 1);
+    font.setStyleStrategy(QFont::PreferAntialias);
     m_ayaTextLabel->setFont(font);
 
     loadData();

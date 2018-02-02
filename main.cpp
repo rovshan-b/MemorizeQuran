@@ -3,6 +3,8 @@
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_HARFBUZZ", "old");
+
     QApplication a(argc, argv);
 
     QCoreApplication::setOrganizationName("RovshanBaghirov");
