@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     qurantextinfo.cpp \
     audioplayer.cpp \
     downloadmanager.cpp \
-    cachingplayer.cpp
+    cachingplayer.cpp \
+    recitationinfo.cpp
 
 HEADERS  += mainwindow.h \
     mylabel.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     qurantextinfo.h \
     audioplayer.h \
     downloadmanager.h \
-    cachingplayer.h
+    cachingplayer.h \
+    recitationinfo.h
 
 FORMS    +=
 

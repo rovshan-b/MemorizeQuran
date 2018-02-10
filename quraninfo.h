@@ -3,6 +3,7 @@
 
 class QuranTextInfo;
 class SuraInfo;
+class RecitationInfo;
 
 #include <QList>
 #include <QMap>
@@ -23,12 +24,16 @@ public:
     QList<QuranTextInfo*> translations();
     QuranTextInfo *translation(int index) const; //1 based index
 
+    QList<RecitationInfo*> recitations();
+    RecitationInfo *recitation(int index) const; //1 based index
+
     void loadAyas(QuranTextInfo *textInfo);
     void loadTranslations(QuranTextInfo *textInfo);
 
 private:
     QList<QuranTextInfo*> m_texts;
     QList<QuranTextInfo*> m_translations;
+    QList<RecitationInfo*> m_recitations;
     QList<SuraInfo*> m_suras;
 
     void loadSuras();

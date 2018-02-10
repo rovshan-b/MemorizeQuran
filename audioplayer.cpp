@@ -7,6 +7,7 @@ AudioPlayer::AudioPlayer(QWidget *parent) : QWidget(parent), m_playerState(QMedi
     m_playButton->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
     m_playButton->setAutoRaise(true);
     m_playButton->setIconSize(QSize(14,14));
+    m_playButton->setToolTip("Play");
 
     connect(m_playButton, SIGNAL(clicked()), this, SLOT(playClicked()));
 
@@ -15,6 +16,7 @@ AudioPlayer::AudioPlayer(QWidget *parent) : QWidget(parent), m_playerState(QMedi
     m_stopButton->setEnabled(false);
     m_stopButton->setAutoRaise(true);
     m_stopButton->setIconSize(QSize(14,14));
+    m_stopButton->setToolTip("Stop");
 
     connect(m_stopButton, SIGNAL(clicked()), this, SIGNAL(stop()));
 
@@ -22,7 +24,7 @@ AudioPlayer::AudioPlayer(QWidget *parent) : QWidget(parent), m_playerState(QMedi
     m_nextButton->setIcon(style()->standardIcon(QStyle::SP_MediaSkipForward));
     m_nextButton->setAutoRaise(true);
     m_nextButton->setIconSize(QSize(14,14));
-    m_nextButton->setVisible(false); //for now
+    m_nextButton->setToolTip("Next aya");
 
     connect(m_nextButton, SIGNAL(clicked()), this, SIGNAL(next()));
 
@@ -30,7 +32,7 @@ AudioPlayer::AudioPlayer(QWidget *parent) : QWidget(parent), m_playerState(QMedi
     m_previousButton->setIcon(style()->standardIcon(QStyle::SP_MediaSkipBackward));
     m_previousButton->setAutoRaise(true);
     m_previousButton->setIconSize(QSize(14,14));
-    m_previousButton->setVisible(false); //for now
+    m_previousButton->setToolTip("Previous aya");
 
     connect(m_previousButton, SIGNAL(clicked()), this, SIGNAL(previous()));
 
@@ -43,6 +45,13 @@ AudioPlayer::AudioPlayer(QWidget *parent) : QWidget(parent), m_playerState(QMedi
     m_labelDuration->setFont(f);
     connect(m_slider, SIGNAL(sliderMoved(int)), this, SLOT(seek(int)));
 
+    m_autoNextButton = new QToolButton(this);
+    m_autoNextButton->setIcon(style()->standardIcon(QStyle::QStyle::SP_MediaSkipForward));
+    m_autoNextButton->setCheckable(true);
+    m_autoNextButton->setAutoRaise(true);
+    m_autoNextButton->setIconSize(QSize(14,14));
+    m_autoNextButton->setToolTip("Play continuously");
+
     QBoxLayout *layout = new QHBoxLayout();
     layout->setMargin(0);
 
@@ -53,6 +62,7 @@ AudioPlayer::AudioPlayer(QWidget *parent) : QWidget(parent), m_playerState(QMedi
 
     layout->addWidget(m_slider, 1);
     layout->addWidget(m_labelDuration);
+    layout->addWidget(m_autoNextButton);
 
     setLayout(layout);
 
@@ -87,6 +97,16 @@ void AudioPlayer::setMedia(const QMediaContent &source)
 void AudioPlayer::start()
 {
     this->playClicked();
+}
+
+void AudioPlayer::stopPlayer()
+{
+    m_player.stop();
+}
+
+bool AudioPlayer::isPlaying() const
+{
+    return m_player.state() == QMediaPlayer::PlayingState;
 }
 
 void AudioPlayer::setState(QMediaPlayer::State state)
@@ -204,8 +224,14 @@ void AudioPlayer::statusChanged(QMediaPlayer::MediaStatus status)
         setStatusInfo(tr("Media Stalled"));
         break;
     case QMediaPlayer::EndOfMedia:
-        QApplication::alert(this);
+    {
+        m_slider->setValue(0);
+        emit endOfMedia();
+        if (m_autoNextButton->isChecked()) {
+            emit next();
+        }
         break;
+    }
     case QMediaPlayer::InvalidMedia:
         displayErrorMessage();
         break;

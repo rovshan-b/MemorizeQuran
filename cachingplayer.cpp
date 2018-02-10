@@ -1,12 +1,14 @@
 #include "cachingplayer.h"
 #include "audioplayer.h"
 #include "surainfo.h"
+#include "recitationinfo.h"
 #include <QtWidgets>
 #include <QDebug>
 
 CachingPlayer::CachingPlayer(QWidget *parent) : QWidget(parent),
     m_sura(0),
     m_aya(1),
+    m_currentRecitation(0),
     m_downloadManager(&m_networkManager)
 {
     m_mainLayout = new QStackedLayout;
@@ -15,6 +17,7 @@ CachingPlayer::CachingPlayer(QWidget *parent) : QWidget(parent),
     m_player = new AudioPlayer();
     m_progressBar = new QProgressBar();
     m_progressBar->setRange(0, 100);
+    m_progressBar->setTextVisible(true);
 
     m_mainLayout->addWidget(m_player);
     m_mainLayout->addWidget(m_progressBar);
@@ -30,22 +33,61 @@ CachingPlayer::CachingPlayer(QWidget *parent) : QWidget(parent),
     connect(m_player, SIGNAL(previous()), this, SIGNAL(previous()));
 }
 
+void CachingPlayer::recalculateFilename()
+{
+    if (!m_sura) {
+        return;
+    }
+
+    if (!m_currentRecitation) {
+        return;
+    }
+
+    if (m_currentRecitation->baseUrl.isEmpty()) {
+        return;
+    }
+
+    QString subdir = QString("MemorizeQuran/recitations/%1").arg(m_currentRecitation->localDirName);
+    QString filename = QString("%1%2.mp3").arg(m_sura->index, 3, 10, QChar('0')).arg(m_aya, 3, 10, QChar('0'));
+
+    QString downloadFolder = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+    m_currentFilename = QDir::cleanPath(downloadFolder).append("/").append(subdir).append("/").append(filename);
+    m_currentUrl = QString(m_currentRecitation->baseUrl).append(filename);
+
+    m_player->setCurrentFilename(m_currentFilename);
+}
+
 void CachingPlayer::setCurrentAya(SuraInfo *sura, int aya)
 {
     m_sura = sura;
     m_aya = aya;
 
-    QString subdir = "MemorizeQuran/recitations/Alafasy_128kbps";
-    QString filename = QString("%1%2.mp3").arg(sura->index, 3, 10, QChar('0')).arg(aya, 3, 10, QChar('0'));
-
-    QString downloadFolder = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-    m_currentFilename = QDir::cleanPath(downloadFolder).append("/").append(subdir).append("/").append(filename);
-    m_currentUrl = QString("http://www.everyayah.com/data/Alafasy_128kbps/").append(filename);
-
     m_player->setHasNext(aya < sura->ayas);
     m_player->setHasPrevious(aya > 1);
 
-    m_player->setCurrentFilename(m_currentFilename);
+    recalculateFilename();
+}
+
+void CachingPlayer::stop()
+{
+    m_player->stop();
+}
+
+void CachingPlayer::play()
+{
+    m_player->playClicked();
+}
+
+void CachingPlayer::setCurrentRecitation(RecitationInfo *recitationInfo)
+{
+    this->m_currentRecitation = recitationInfo;
+
+    recalculateFilename();
+}
+
+bool CachingPlayer::isPlaying() const
+{
+    return m_player->isPlaying();
 }
 
 void CachingPlayer::startDownload()

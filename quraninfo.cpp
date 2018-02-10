@@ -3,6 +3,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include "qurantextinfo.h"
+#include "recitationinfo.h"
 #include "surainfo.h"
 
 QuranInfo::QuranInfo()
@@ -16,6 +17,9 @@ QuranInfo::QuranInfo()
     m_translations.append(new QuranTextInfo(4, "Azerbaijani - Vasim Mammadaliyev and Ziya Bunyadov", "az.mammadaliyev.txt"));
     m_translations.append(new QuranTextInfo(5, "Russian - Elmir Kuliev", "ru.kuliev.txt"));
 
+    m_recitations.append(new RecitationInfo(1, "None", "", ""));
+    m_recitations.append(new RecitationInfo(2, "Mishary Rashid Alafasy", "http://www.everyayah.com/data/Alafasy_128kbps/", "Alafasy_128kbps"));
+
     loadSuras();
 }
 
@@ -24,6 +28,7 @@ QuranInfo::~QuranInfo()
     qDeleteAll(m_suras);
     qDeleteAll(m_texts);
     qDeleteAll(m_translations);
+    qDeleteAll(m_recitations);
 }
 
 QList<QuranTextInfo *> QuranInfo::texts()
@@ -49,6 +54,16 @@ QList<QuranTextInfo *> QuranInfo::translations()
 QuranTextInfo *QuranInfo::translation(int index) const
 {
     return m_translations.at(index - 1);
+}
+
+QList<RecitationInfo *> QuranInfo::recitations()
+{
+    return this->m_recitations;
+}
+
+RecitationInfo *QuranInfo::recitation(int index) const
+{
+    return m_recitations.at(index - 1);
 }
 
 void QuranInfo::loadAyas(QuranTextInfo *textInfo)

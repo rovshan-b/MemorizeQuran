@@ -18,6 +18,8 @@ public:
     void setMedia(const QMediaContent &source);
 
     void start();
+    void stopPlayer();
+    bool isPlaying() const;
 
 signals:
     void play();
@@ -26,6 +28,7 @@ signals:
     void next();
     void previous();
     void fileNotFound();
+    void endOfMedia();
 
 public slots:
     void setState(QMediaPlayer::State state);
@@ -34,9 +37,9 @@ public slots:
     void setHasPrevious(bool has);
     void setCurrentFilename(const QString &filename);
 
-private slots:
     void playClicked();
 
+private slots:
     void durationChanged(qint64 duration);
     void positionChanged(qint64 progress);
     void metaDataChanged();
@@ -64,6 +67,8 @@ private:
 
     QSlider *m_slider;
     QLabel *m_labelDuration;
+
+    QToolButton *m_autoNextButton;
 
     qint64 m_duration;
 

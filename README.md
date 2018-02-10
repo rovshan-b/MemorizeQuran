@@ -2,9 +2,10 @@
 
 Memorize Quran is a very simple application that stays on your desktop and rotates ayas for the specific sura that you select.
 It also displays translation for current aya. You can change window opacity by using mouse wheel button.
-It does not require internet connection. All the files are built in as resource files.
+It does not require internet connection for viewing textual information. Recitation files are fetched upon first play and cached in user's Downloads folder.
 
-All data is from [Tanzil.net](http://tanzil.net)
+All textual data is from [Tanzil.net](http://tanzil.net)
+All recitation data is from [EveryAyah.com](http://everyayah.com)
 
 <p align="center">
   <img src="./screenshots/screenshot1.png" 

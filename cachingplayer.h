@@ -10,6 +10,7 @@ class AudioPlayer;
 class QProgressBar;
 class SuraInfo;
 class QStackedLayout;
+class RecitationInfo;
 
 class CachingPlayer : public QWidget
 {
@@ -18,6 +19,13 @@ public:
     explicit CachingPlayer(QWidget *parent = 0);
 
     void setCurrentAya(SuraInfo *sura, int aya);
+
+    void stop();
+    void play();
+
+    void setCurrentRecitation(RecitationInfo *recitationInfo);
+
+    bool isPlaying() const;
 
 signals:
     void next();
@@ -31,6 +39,8 @@ private slots:
     void dlFinished();
 
 private:
+    void recalculateFilename();
+
     QStackedLayout *m_mainLayout;
 
     AudioPlayer *m_player;
@@ -41,6 +51,8 @@ private:
 
     QString m_currentFilename;
     QString m_currentUrl;
+
+    RecitationInfo *m_currentRecitation;
 
     QNetworkAccessManager m_networkManager;
 

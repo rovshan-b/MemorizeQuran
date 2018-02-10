@@ -5,6 +5,7 @@
 #include "qurantextinfo.h"
 #include "surainfo.h"
 #include "cachingplayer.h"
+#include "recitationinfo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_currentText(0),
     m_currentSura(0),
     m_currentTrans(0),
+    m_currentRecitation(0),
     m_currentAya(0),
     m_rotateInterval(0)
 {
@@ -49,7 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QSettings settings;
     restoreGeometry(settings.value("geometry").toByteArray());
 
-    setWindowStyle(settings.value("stayOnTop", true).toBool());
+    //setWindowStyle(settings.value("stayOnTop", true).toBool());
+    setWindowStyle(true);
 
     float opacity = qMin(qMax(settings.value("opacity", "1.0").toDouble(), 0.3), 1.0);
     setWindowOpacity(opacity);
@@ -61,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loadData();
     initMenu();
+    initPlayer();
 
     int text = qMin(qMax(settings.value("text", "1").toInt(), 1), m_QuranInfo.texts().count());
     setCurrentText(text);
@@ -68,13 +72,16 @@ MainWindow::MainWindow(QWidget *parent) :
     int trans = qMin(qMax(settings.value("trans", "1").toInt(), 1), 114);
     setCurrentTrans(trans);
 
+    int recitation = qMin(qMax(settings.value("recitation", "1").toInt(), 1), m_QuranInfo.recitations().count());
+    setCurrentRecitation(recitation);
+
     int sura = qMin(qMax(settings.value("sura", "1").toInt(), 1), 114);
     setCurrentSura(sura);
 
     int aya = settings.value("aya", "1").toInt();
     setCurrentAya(aya);
 
-    connect(&m_rotateTimer, SIGNAL(timeout()), this, SLOT(showNextAya()));
+    connect(&m_rotateTimer, SIGNAL(timeout()), this, SLOT(rotate()));
 
     int rotateInterval = qMin(qMax(settings.value("rotateInterval", "0").toInt(), 0), 60);
     setRotateInterval(rotateInterval);
@@ -143,6 +150,10 @@ void MainWindow::initMenu()
     populateTransMenu(m_transMenu);
     mainMenu->addMenu(m_transMenu);
 
+    m_recitationMenu = new QMenu("Re&citation", this);
+    populateRecitationMenu(m_recitationMenu);
+    mainMenu->addMenu(m_recitationMenu);
+
     m_rotateMenu = new QMenu("&Rotate interval", this);
     populateRotateIntervalMenu(m_rotateMenu);
     mainMenu->addMenu(m_rotateMenu);
@@ -155,10 +166,7 @@ void MainWindow::initMenu()
 void MainWindow::initOptionsBar(QMenu *optionsMenu)
 {
     QHBoxLayout *layout = new QHBoxLayout();
-    layout->setContentsMargins(0,0,0,0);
-
-    m_player = new CachingPlayer(this);
-    layout->addWidget(m_player);
+    layout->setContentsMargins(2,2,2,2);
 
     m_ayaSpin = new QSpinBox(this);
     m_ayaSpin->setToolTip("Aya to display");
@@ -174,13 +182,31 @@ void MainWindow::initOptionsBar(QMenu *optionsMenu)
     optionsButton->setMenu(optionsMenu);
     optionsButton->setPopupMode(QToolButton::InstantPopup);
     optionsButton->setIconSize(QSize(14,14));
+    optionsButton->setToolTip("Options");
     layout->addWidget(optionsButton);
+
+    m_grip1 = new QSizeGrip(this);
+    layout->addWidget(m_grip1, 0, Qt::AlignBottom | Qt::AlignRight);
 
     QWidget *optionsBar = new QWidget(this);
     optionsBar->setLayout(layout);
-    m_mainLayout->addWidget(optionsBar);
+    m_mainLayout->addWidget(optionsBar, 0, Qt::AlignRight);
+}
 
-    layout->addWidget(new QSizeGrip(this), 0, Qt::AlignBottom | Qt::AlignRight);
+void MainWindow::initPlayer()
+{
+    QHBoxLayout *layout = new QHBoxLayout();
+    layout->setContentsMargins(0,0,0,0);
+
+    m_player = new CachingPlayer(this);
+    connect(m_player, SIGNAL(previous()), this, SLOT(previous()));
+    connect(m_player, SIGNAL(next()), this, SLOT(next()));
+    layout->addWidget(m_player);
+
+    m_grip2 = new QSizeGrip(this);
+    layout->addWidget(m_grip2, 0, Qt::AlignBottom | Qt::AlignRight);
+
+    m_mainLayout->addLayout(layout);
 }
 
 void MainWindow::populateSuraMenu(QMenu *menu)
@@ -208,6 +234,21 @@ void MainWindow::populateTransMenu(QMenu *menu)
         action->setData(QVariant::fromValue(transInfo));
         action->setCheckable(true);
         connect(action, SIGNAL(toggled(bool)), this, SLOT(transMenuItemToggled(bool)));
+        group->addAction(action);
+        menu->addAction(action);
+    }
+}
+
+void MainWindow::populateRecitationMenu(QMenu *menu)
+{
+    QActionGroup *group = new QActionGroup(this);
+    group->setExclusive(true);
+
+    foreach (RecitationInfo *recitationInfo, m_QuranInfo.recitations()) {
+        QAction *action = new QAction(recitationInfo->title, this);
+        action->setData(QVariant::fromValue(recitationInfo));
+        action->setCheckable(true);
+        connect(action, SIGNAL(toggled(bool)), this, SLOT(recitationMenuItemToggled(bool)));
         group->addAction(action);
         menu->addAction(action);
     }
@@ -270,7 +311,7 @@ void MainWindow::setCurrentSura(SuraInfo *suraInfo)
     m_ayaSpin->setRange(1, m_currentSura->ayas);
     m_ayaSpin->setValue(1);
 
-    setCurrentAya(1);
+    setCurrentAya(1, true);
     showCurrentAya();
 }
 
@@ -297,9 +338,41 @@ void MainWindow::setCurrentTrans(QuranTextInfo *transInfo)
     showCurrentAya();
 }
 
-void MainWindow::setCurrentAya(int index)
+void MainWindow::setCurrentRecitation(int index)
 {
-    if (index == m_currentAya) {
+    setCurrentRecitation(m_QuranInfo.recitation(index));
+}
+
+void MainWindow::setCurrentRecitation(RecitationInfo *recitationInfo)
+{
+    if (recitationInfo == m_currentRecitation) {
+        return;
+    }
+
+    m_currentRecitation = recitationInfo;
+
+    QAction *action = m_recitationMenu->actions().at(recitationInfo->index - 1);
+    if (!action->isChecked()) {
+        action->setChecked(true);
+    }
+
+    m_player->setCurrentRecitation(recitationInfo);
+
+    bool makeVisible = (recitationInfo->index > 1);
+    m_player->setVisible(makeVisible);
+
+    if (makeVisible) {
+        m_grip1->setVisible(false);
+        m_grip2->setVisible(true);
+    } else {
+        m_grip1->setVisible(true);
+        m_grip2->setVisible(false);
+    }
+}
+
+void MainWindow::setCurrentAya(int index, bool forced)
+{
+    if (index == m_currentAya && !forced) {
         return;
     }
 
@@ -392,8 +465,28 @@ void MainWindow::transMenuItemToggled(bool checked)
     setCurrentTrans(transInfo);
 }
 
+void MainWindow::recitationMenuItemToggled(bool checked)
+{
+    if (!checked) {
+        return;
+    }
+
+    QAction* action = qobject_cast<QAction*>(sender());
+    if (!action) {
+        return;
+    }
+    RecitationInfo * recitationInfo = action->data().value<RecitationInfo *>();
+    if (!recitationInfo) {
+        return;
+    }
+
+    setCurrentRecitation(recitationInfo);
+}
+
 void MainWindow::ayaSpinChanged(int aya)
 {
+    m_player->stop();
+
     setCurrentAya(aya);
     showCurrentAya();
 }
@@ -442,7 +535,7 @@ void MainWindow::rotateIntervalToggled(bool checked)
     setRotateInterval(interval);
 }
 
-void MainWindow::showNextAya()
+bool MainWindow::showNextAya()
 {
     int nextAya = m_currentAya + 1;
     if (nextAya > m_currentSura->ayas) {
@@ -451,6 +544,30 @@ void MainWindow::showNextAya()
 
     setCurrentAya(nextAya);
     showCurrentAya();
+
+    return true;
+}
+
+bool MainWindow::showPreviousAya()
+{
+    int prevAya = m_currentAya - 1;
+    if (prevAya <= 0) {
+        return false;
+    }
+
+    setCurrentAya(prevAya);
+    showCurrentAya();
+
+    return true;
+}
+
+void MainWindow::rotate()
+{
+    if (m_player->isPlaying()) {
+        return;
+    }
+
+    showNextAya();
 }
 
 void MainWindow::exit()
@@ -464,6 +581,7 @@ void MainWindow::exit()
     settings.setValue("sura", m_currentSura->index);
     settings.setValue("aya", m_currentAya);
     settings.setValue("trans", m_currentTrans->index);
+    settings.setValue("recitation", m_currentRecitation->index);
     settings.setValue("rotateInterval", m_rotateInterval);
 
     QApplication::exit(0);
@@ -471,12 +589,16 @@ void MainWindow::exit()
 
 void MainWindow::next()
 {
-    setCurrentAya(m_currentAya + 1);
+    if (showNextAya() ) {
+        m_player->play();
+    }
 }
 
 void MainWindow::previous()
 {
-    setCurrentAya(m_currentAya - 1);
+    if (showPreviousAya() ) {
+        m_player->play();
+    }
 }
 
 void MainWindow::setRotateInterval(int interval)

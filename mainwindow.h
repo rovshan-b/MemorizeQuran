@@ -12,6 +12,7 @@ class QSpinBox;
 class MyLabel;
 class CachingPlayer;
 class QVBoxLayout;
+class QSizeGrip;
 
 class MainWindow : public QMainWindow
 {
@@ -33,12 +34,15 @@ private slots:
     void suraMenuItemToggled(bool checked);
     void textMenuItemToggled(bool checked);
     void transMenuItemToggled(bool checked);
+    void recitationMenuItemToggled(bool checked);
 
     void ayaSpinChanged(int aya);
 
     void rotateIntervalToggled(bool checked);
 
-    void showNextAya();
+    bool showNextAya();
+    bool showPreviousAya();
+    void rotate();
 
     void exit();
 
@@ -59,12 +63,14 @@ private:
     QMenu *m_QuranTextMenu;
     QMenu *m_suraMenu;
     QMenu *m_transMenu;
+    QMenu *m_recitationMenu;
     QMenu *m_rotateMenu;
 
     QuranInfo m_QuranInfo;
     QuranTextInfo *m_currentText;
     SuraInfo *m_currentSura;
     QuranTextInfo *m_currentTrans;
+    RecitationInfo *m_currentRecitation;
     int m_currentAya;
 
     QTimer m_rotateTimer;
@@ -74,13 +80,18 @@ private:
 
     CachingPlayer *m_player;
 
+    QSizeGrip *m_grip1;
+    QSizeGrip *m_grip2;
+
     void setWindowStyle(bool stayOnTop);
 
     void initMenu();
     void initOptionsBar(QMenu *optionsMenu);
+    void initPlayer();
     void populateQuranTextMenu(QMenu *menu);
     void populateSuraMenu(QMenu *menu);
     void populateTransMenu(QMenu *menu);
+    void populateRecitationMenu(QMenu *menu);
     void populateRotateIntervalMenu(QMenu *menu);
     void loadData();
 
@@ -93,7 +104,10 @@ private:
     void setCurrentTrans(int index);
     void setCurrentTrans(QuranTextInfo *transInfo);
 
-    void setCurrentAya(int index);
+    void setCurrentRecitation(int index);
+    void setCurrentRecitation(RecitationInfo *recitationInfo);
+
+    void setCurrentAya(int index, bool forced = false);
 
     void showCurrentAya();
 
