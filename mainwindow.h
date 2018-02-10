@@ -10,6 +10,8 @@ class QMenu;
 class QLabel;
 class QSpinBox;
 class MyLabel;
+class CachingPlayer;
+class QVBoxLayout;
 
 class MainWindow : public QMainWindow
 {
@@ -40,10 +42,15 @@ private slots:
 
     void exit();
 
+    void next();
+    void previous();
+
 private:
     int m_mouseClickX;
     int m_mouseClickY;
     bool m_dragInProgress;
+
+    QVBoxLayout *m_mainLayout;
 
     QLabel *m_suraNameLabel;
     MyLabel *m_ayaTextLabel;
@@ -63,11 +70,14 @@ private:
     QTimer m_rotateTimer;
     int m_rotateInterval;
 
-    QSpinBox *ayaSpin;
+    QSpinBox *m_ayaSpin;
+
+    CachingPlayer *m_player;
 
     void setWindowStyle(bool stayOnTop);
 
     void initMenu();
+    void initOptionsBar(QMenu *optionsMenu);
     void populateQuranTextMenu(QMenu *menu);
     void populateSuraMenu(QMenu *menu);
     void populateTransMenu(QMenu *menu);

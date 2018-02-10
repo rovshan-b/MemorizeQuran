@@ -1,16 +1,18 @@
 #include "mainwindow.h"
-#include <QtGui>
+#include <QtWidgets>
 #include <QDebug>
 #include "mylabel.h"
 #include "qurantextinfo.h"
 #include "surainfo.h"
+#include "cachingplayer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_dragInProgress(false),
+    m_currentText(0),
     m_currentSura(0),
     m_currentTrans(0),
-    m_currentAya(1),
+    m_currentAya(0),
     m_rotateInterval(0)
 {
     setWindowTitle("Memorize Quran");
@@ -18,23 +20,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QWidget *mainWidget = new QWidget(this);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(mainWidget);
-    mainWidget->setLayout(mainLayout);
+    m_mainLayout = new QVBoxLayout(mainWidget);
+    m_mainLayout->setContentsMargins(2,2,2,2);
+    m_mainLayout->setSpacing(0);
+
+    mainWidget->setLayout(m_mainLayout);
 
     m_suraNameLabel = new QLabel(this);
     m_suraNameLabel->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(m_suraNameLabel);
+    m_mainLayout->addWidget(m_suraNameLabel);
 
     m_ayaTextLabel = new MyLabel(this);
     m_ayaTextLabel->setText("empty");
     m_ayaTextLabel->setWordWrap(true);
     m_ayaTextLabel->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(m_ayaTextLabel, 1);
+    m_mainLayout->addWidget(m_ayaTextLabel, 1);
 
     m_transLabel = new QLabel(this);
     m_transLabel->setWordWrap(true);
     m_transLabel->setAlignment(Qt::AlignCenter);
-    mainLayout->addWidget(m_transLabel);
+    m_mainLayout->addWidget(m_transLabel);
 
     setCentralWidget(mainWidget);
 
@@ -144,20 +149,38 @@ void MainWindow::initMenu()
 
     mainMenu->addAction("E&xit", this, SLOT(exit()));
 
-    QPushButton *optionsButton = new QPushButton("Options", this);
-    optionsButton->setFlat(true);
-    optionsButton->setMenu(mainMenu);
+    initOptionsBar(mainMenu);
+}
 
-    ayaSpin = new QSpinBox(this);
-    ayaSpin->setToolTip("Aya to display");
-    connect(ayaSpin, SIGNAL(valueChanged(int)), this, SLOT(ayaSpinChanged(int)));
+void MainWindow::initOptionsBar(QMenu *optionsMenu)
+{
+    QHBoxLayout *layout = new QHBoxLayout();
+    layout->setContentsMargins(0,0,0,0);
 
-    QFont sf = statusBar()->font();
-    sf.setPointSize(8);
-    ayaSpin->setFont(sf);
-    optionsButton->setFont(sf);
-    statusBar()->addPermanentWidget(ayaSpin);
-    statusBar()->addPermanentWidget(optionsButton);
+    m_player = new CachingPlayer(this);
+    layout->addWidget(m_player);
+
+    m_ayaSpin = new QSpinBox(this);
+    m_ayaSpin->setToolTip("Aya to display");
+    QFont f = m_ayaSpin->font();
+    f.setPointSize(8);
+    m_ayaSpin->setFont(f);
+    connect(m_ayaSpin, SIGNAL(valueChanged(int)), this, SLOT(ayaSpinChanged(int)));
+    layout->addWidget(m_ayaSpin);
+
+    QToolButton *optionsButton = new QToolButton(this);
+    optionsButton->setIcon(QIcon(":/icons/options.png"));
+    optionsButton->setAutoRaise(true);
+    optionsButton->setMenu(optionsMenu);
+    optionsButton->setPopupMode(QToolButton::InstantPopup);
+    optionsButton->setIconSize(QSize(14,14));
+    layout->addWidget(optionsButton);
+
+    QWidget *optionsBar = new QWidget(this);
+    optionsBar->setLayout(layout);
+    m_mainLayout->addWidget(optionsBar);
+
+    layout->addWidget(new QSizeGrip(this), 0, Qt::AlignBottom | Qt::AlignRight);
 }
 
 void MainWindow::populateSuraMenu(QMenu *menu)
@@ -244,8 +267,8 @@ void MainWindow::setCurrentSura(SuraInfo *suraInfo)
         action->setChecked(true);
     }
 
-    ayaSpin->setRange(1, m_currentSura->ayas);
-    ayaSpin->setValue(1);
+    m_ayaSpin->setRange(1, m_currentSura->ayas);
+    m_ayaSpin->setValue(1);
 
     setCurrentAya(1);
     showCurrentAya();
@@ -287,7 +310,9 @@ void MainWindow::setCurrentAya(int index)
     int aya = qMin(qMax(index, 1), m_currentSura->ayas);
 
     m_currentAya = aya;
-    ayaSpin->setValue(aya);
+    m_ayaSpin->setValue(aya);
+
+    m_player->setCurrentAya(m_currentSura, aya);
 }
 
 void MainWindow::setCurrentText(int index)
@@ -442,6 +467,16 @@ void MainWindow::exit()
     settings.setValue("rotateInterval", m_rotateInterval);
 
     QApplication::exit(0);
+}
+
+void MainWindow::next()
+{
+    setCurrentAya(m_currentAya + 1);
+}
+
+void MainWindow::previous()
+{
+    setCurrentAya(m_currentAya - 1);
 }
 
 void MainWindow::setRotateInterval(int interval)

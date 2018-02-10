@@ -23,6 +23,7 @@ QuranInfo::~QuranInfo()
 {
     qDeleteAll(m_suras);
     qDeleteAll(m_texts);
+    qDeleteAll(m_translations);
 }
 
 QList<QuranTextInfo *> QuranInfo::texts()
