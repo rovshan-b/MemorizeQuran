@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_mainLayout = new QVBoxLayout(mainWidget);
     m_mainLayout->setContentsMargins(2,2,2,2);
-    m_mainLayout->setSpacing(0);
+    m_mainLayout->setSpacing(3);
 
     mainWidget->setLayout(m_mainLayout);
 

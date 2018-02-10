@@ -17,5 +17,4 @@ All data is from [Tanzil.net](http://tanzil.net)
 
 ## How to build
 
-You can build it for Qt 4 as is. 
-To build for Qt 5, open mainwindow.cpp file, on line 2 change `#include <QtGui>` to `#include <QtWidgets>` and build.
+You can build it using Qt 5,
