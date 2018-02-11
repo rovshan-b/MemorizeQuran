@@ -26,6 +26,7 @@ public:
     void setCurrentRecitation(RecitationInfo *recitationInfo);
 
     bool isPlaying() const;
+    bool isDownloading() const;
 
 signals:
     void next();

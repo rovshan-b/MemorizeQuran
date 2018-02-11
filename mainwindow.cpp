@@ -563,7 +563,7 @@ bool MainWindow::showPreviousAya()
 
 void MainWindow::rotate()
 {
-    if (m_player->isPlaying()) {
+    if (m_player->isPlaying() || m_player->isDownloading()) {
         return;
     }
 

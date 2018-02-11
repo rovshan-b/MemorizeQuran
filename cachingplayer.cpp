@@ -90,6 +90,11 @@ bool CachingPlayer::isPlaying() const
     return m_player->isPlaying();
 }
 
+bool CachingPlayer::isDownloading() const
+{
+    return m_mainLayout->currentIndex() == 1;
+}
+
 void CachingPlayer::startDownload()
 {
     QFileInfo fInfo(m_currentFilename);
