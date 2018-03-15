@@ -49,6 +49,8 @@ private slots:
     void next();
     void previous();
 
+    void about();
+
 private:
     int m_mouseClickX;
     int m_mouseClickY;

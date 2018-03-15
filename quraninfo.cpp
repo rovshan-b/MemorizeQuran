@@ -18,7 +18,10 @@ QuranInfo::QuranInfo()
     m_translations.append(new QuranTextInfo(5, "Russian - Elmir Kuliev", "ru.kuliev.txt"));
 
     m_recitations.append(new RecitationInfo(1, "None", "", ""));
-    m_recitations.append(new RecitationInfo(2, "Mishary Rashid Alafasy", "http://www.everyayah.com/data/Alafasy_128kbps/", "Alafasy_128kbps"));
+    m_recitations.append(new RecitationInfo(2, "Al-Ghamadi", "http://www.everyayah.com/data/Ghamadi_40kbps/", "Ghamadi_40kbps"));
+    m_recitations.append(new RecitationInfo(3, "Mishary Rashid Alafasy", "http://www.everyayah.com/data/Alafasy_128kbps/", "Alafasy_128kbps"));
+    m_recitations.append(new RecitationInfo(4, "Az - Alikhan Musayev", "http://tanzil.net/res/audio/musayev/", "Alikhan_Musayev"));
+    m_recitations.append(new RecitationInfo(5, "En - Saheeh Intl, Ibrahim Walk", "http://www.everyayah.com/data/English/Sahih_Intnl_Ibrahim_Walk_192kbps/", "Saheeh_Intl_Ibrahim_Walk"));
 
     loadSuras();
 }

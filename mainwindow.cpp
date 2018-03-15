@@ -158,6 +158,8 @@ void MainWindow::initMenu()
     populateRotateIntervalMenu(m_rotateMenu);
     mainMenu->addMenu(m_rotateMenu);
 
+    mainMenu->addAction("About", this, SLOT(about()));
+
     mainMenu->addAction("E&xit", this, SLOT(exit()));
 
     initOptionsBar(mainMenu);
@@ -599,6 +601,13 @@ void MainWindow::previous()
     if (showPreviousAya() ) {
         m_player->play();
     }
+}
+
+void MainWindow::about()
+{
+    QMessageBox::information(this, "About application",
+                             "All textual data is from www.tanzil.net.\nAll recitation data is from www.tanzil.net and www.everyayah.com.\n"
+                             "Send your comments to rovshanb@yandex.ru");
 }
 
 void MainWindow::setRotateInterval(int interval)

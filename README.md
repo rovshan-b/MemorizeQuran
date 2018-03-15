@@ -5,7 +5,8 @@ It also displays translation for current aya. You can change window opacity by u
 It does not require internet connection for viewing textual information. Recitation files are fetched upon first play and cached in user's Downloads folder.
 
 All textual data is from [Tanzil.net](http://tanzil.net)
-All recitation data is from [EveryAyah.com](http://everyayah.com)
+
+All recitation data is from [Tanzil.net](http://tanzil.net) and [EveryAyah.com](http://everyayah.com)
 
 <p align="center">
   <img src="./screenshots/screenshot1.png" 
