@@ -16,6 +16,7 @@ All recitation data is from [Tanzil.net](http://tanzil.net) and [EveryAyah.com](
 ## Download
 
 * [Windows 64 bit](https://raw.githubusercontent.com/rovshan-b/MemorizeQuran/master/executable/MemorizeQuran.zip)
+* [Mac OS 64 bit](https://raw.githubusercontent.com/rovshan-b/MemorizeQuran/master/executable/MemorizeQuran.dmg)
 
 ## How to build
 
