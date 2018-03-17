@@ -495,7 +495,16 @@ void MainWindow::ayaSpinChanged(int aya)
 
 void MainWindow::setWindowStyle(bool stayOnTop)
 {
-    Qt::WindowFlags flags(Qt::Tool | Qt::FramelessWindowHint);
+    //on mac cannot make QSizeGrip appear.
+    //remove frameless hint until finding solution.
+    Qt::WindowFlags flags(
+                #ifdef Q_OS_MAC
+                    Qt::SubWindow
+                #else
+                    Qt::Tool |
+                    Qt::FramelessWindowHint
+                #endif
+                );
     if (stayOnTop) {
         flags |= Qt::WindowStaysOnTopHint;
     }
