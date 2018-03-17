@@ -79,7 +79,7 @@ AudioPlayer::AudioPlayer(QWidget *parent) : QWidget(parent), m_playerState(QMedi
 
     connect(this, SIGNAL(play()), &m_player, SLOT(play()));
     connect(this, SIGNAL(pause()), &m_player, SLOT(pause()));
-    connect(this, SIGNAL(stop()), &m_player, SLOT(stop()));
+    connect(this, SIGNAL(stop()), this, SLOT(stopPlayer()));
 
     setState(m_player.state());
 
@@ -101,6 +101,7 @@ void AudioPlayer::start()
 
 void AudioPlayer::stopPlayer()
 {
+    m_player.setMedia(QMediaContent());
     m_player.stop();
 }
 
@@ -153,7 +154,7 @@ void AudioPlayer::playClicked()
     {
         if (QFile::exists(m_currentFilename)) {
             setMedia(QUrl::fromLocalFile(m_currentFilename));
-            emit play();
+            //emit play(); play will be emitted upon loading of media
         } else {
             emit fileNotFound();
         }
@@ -212,10 +213,13 @@ void AudioPlayer::statusChanged(QMediaPlayer::MediaStatus status)
     switch (status) {
     case QMediaPlayer::UnknownMediaStatus:
     case QMediaPlayer::NoMedia:
-    case QMediaPlayer::LoadedMedia:
     case QMediaPlayer::BufferingMedia:
     case QMediaPlayer::BufferedMedia:
         setStatusInfo(QString());
+        break;
+    case QMediaPlayer::LoadedMedia:
+        setStatusInfo(QString());
+        emit play();
         break;
     case QMediaPlayer::LoadingMedia:
         setStatusInfo(tr("Loading..."));

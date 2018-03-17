@@ -18,7 +18,6 @@ public:
     void setMedia(const QMediaContent &source);
 
     void start();
-    void stopPlayer();
     bool isPlaying() const;
 
 signals:
@@ -32,6 +31,8 @@ signals:
 
 public slots:
     void setState(QMediaPlayer::State state);
+
+    void stopPlayer();
 
     void setHasNext(bool has);
     void setHasPrevious(bool has);
