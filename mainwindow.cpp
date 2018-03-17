@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_rotateInterval(0)
 {
     setWindowTitle("Memorize Quran");
+    setWindowIcon(QPixmap(":/icons/app-icon.png"));
     setStyleSheet("QMainWindow { background-color: white }");
 
     QWidget *mainWidget = new QWidget(this);

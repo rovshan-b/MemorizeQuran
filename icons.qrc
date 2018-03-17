@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/options.png</file>
+        <file>icons/app-icon.png</file>
     </qresource>
 </RCC>

@@ -41,3 +41,5 @@ RESOURCES += \
     icons.qrc
 
 RC_FILE = app.rc
+
+ICON = app-icon.icns
