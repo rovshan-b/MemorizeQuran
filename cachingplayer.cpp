@@ -44,6 +44,7 @@ void CachingPlayer::recalculateFilename()
     }
 
     if (m_currentRecitation->baseUrl.isEmpty()) {
+        stop();
         return;
     }
 
@@ -70,7 +71,7 @@ void CachingPlayer::setCurrentAya(SuraInfo *sura, int aya)
 
 void CachingPlayer::stop()
 {
-    m_player->stop();
+    m_player->stopPlayer();
 }
 
 void CachingPlayer::play()
